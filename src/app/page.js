@@ -160,7 +160,10 @@ export default function Page() {
         })}
       </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold mt-8 border-l-4 border-secondary pl-2">Categories</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mt-8 border-l-4 border-secondary pl-2">Browse by Category</h2>
+        <p className="text-slate-600 text-lg max-w-2xl pl-3 mt-2 mb-3">
+            Discover articles, tutorials, and resources organized by topic
+          </p>
       <CategoryNav />
     </div>
   );
