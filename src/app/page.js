@@ -21,7 +21,7 @@ export default function Page() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res = await fetch("whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/posts?_embed");
+        const res = await fetch("https://whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/posts?_embed");
         const data = await res.json();
         setPosts(data);
       } catch (error) {
