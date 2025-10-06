@@ -10,7 +10,7 @@ export default function CategoryNav() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch("https://devshiping.com/wp-json/wp/v2/categories");
+        const res = await fetch("whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/categories");
         const data = await res.json();
         const visible = data.filter((cat) => cat.count > 0);
         setCategories(visible);
