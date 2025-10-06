@@ -1,103 +1,167 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { Card, CardContent } from "@/components/ui/card";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+import PostSkeleton from "@/components/PostSkeleton";
+import { FaArrowRight } from "react-icons/fa";
+import CategoryNav from "@/components/CategoryNav";
+
+export default function Page() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const res = await fetch("https://devshiping.com/wp-json/wp/v2/posts?_embed");
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-8">
+
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(6)].map((_, i) => (
+            <PostSkeleton key={i} />
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-8">
+
+      {/* Hero Slider */}
+      <div className="mb-12">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          autoplay={{ delay: 5000 }}
+          pagination={{ clickable: true }}
+          spaceBetween={20}
+          slidesPerView={1}
+          loop={true}
+          className="rounded-2xl overflow-hidden"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          {posts.slice(0, 5).map((post) => {
+            const image =
+              post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || null;
+
+            return (
+              <SwiperSlide key={post.id}>
+                <Card className="relative w-full h-80 overflow-hidden">
+                  {image && (
+                    <Image
+                      src={image}
+                      alt={post.title.rendered}
+                      fill
+                      className="object-cover brightness-75"
+                    />
+                  )}
+                  <CardContent className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent text-white">
+                    <h2
+                      className="text-2xl font-semibold mb-2"
+                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                    />
+                    <Link
+                      href={`/posts/${post.slug}`}
+                      className="bg-secondary flex w-fit gap-3 items-center text-white py-2 px-4 rounded  hover:text-white hover:bg-secondary/80 font-medium"
+                    >
+                      Read More <FaArrowRight/>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+
+      <h2 className="text-2xl sm:text-3xl font-bold mb-8 border-l-4 border-secondary pl-2">Latest Posts</h2>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => {
+          const image =
+            post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || null;
+          const author = post._embedded?.author?.[0];
+
+          return (
+            <div
+              key={post.id}
+              className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            >
+              {image && (
+                <div className="relative w-full h-48">
+                  <Image
+                    src={image}
+                    alt={post.title.rendered}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                    priority={false}
+                  />
+                </div>
+              )}
+
+              <div className="p-5">
+                <h2
+                  className="text-xl font-semibold mb-2 hover:text-secondary transition"
+                  dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                />
+
+                <div
+                  className="text-gray-700 text-sm mb-4 line-clamp-3"
+                  dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+                />
+
+                {author && (
+                  <div className="flex items-center gap-3 mt-4">
+                    <Image
+                      src={author.avatar_urls["48"]}
+                      alt={author.name}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                    <p className="text-sm text-gray-600">
+                      By <span className="font-semibold">{author.name}</span>
+                    </p>
+                  </div>
+                )}
+
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="text-secondary font-medium mt-4 block"
+                >
+                  Read More →
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+        <h2 className="text-2xl sm:text-3xl font-bold mt-8 border-l-4 border-secondary pl-2">Categories</h2>
+      <CategoryNav />
     </div>
   );
 }
