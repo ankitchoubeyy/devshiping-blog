@@ -3,7 +3,7 @@ import Image from "next/image";
 
 async function getPost(slug) {
   const res = await fetch(
-    `https://devshiping.com/wp-json/wp/v2/posts?slug=${slug}&_embed`,
+    `https://whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/posts?slug=${slug}&_embed`,
     { next: { revalidate: 60 } } // caches for 1 min
   );
   const posts = await res.json();
