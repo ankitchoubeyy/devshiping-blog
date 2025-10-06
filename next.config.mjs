@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "devshiping.com",
+        hostname: "whitesmoke-wildcat-383702.hostingersite.com",
       },
       {
         protocol: "https",
