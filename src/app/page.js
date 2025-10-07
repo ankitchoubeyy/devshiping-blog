@@ -7,9 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-
 import { Card, CardContent } from "@/components/ui/card";
-
 import PostSkeleton from "@/components/PostSkeleton";
 import { FaArrowRight } from "react-icons/fa";
 import CategoryNav from "@/components/CategoryNav";
@@ -168,13 +166,13 @@ export default function Page() {
       <CategoryNav />
       {/* View All Link */}
         <div className="text-center">
-          <button
-            onClick={() => window.location.href = '/categories'}
+          <Link
+            href = '/categories'
             className="inline-flex items-center gap-2 px-6 py-3 bg-secondary cursor-pointer text-white font-semibold rounded-xl hover:bg-secondary/90 transition-all shadow-lg hover:shadow-xl"
           >
             View All Categories
             <ChevronRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
     </div>
   );

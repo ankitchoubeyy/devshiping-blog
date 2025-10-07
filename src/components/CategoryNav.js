@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronRight, Folder, TrendingUp } from "lucide-react";
 import CategoryCardSkeleton from "./CategoryCardSkeleton";
+import Link from "next/link";
 
 export default function CategoryNav() {
   const [categories, setCategories] = useState([]);
@@ -26,10 +27,10 @@ export default function CategoryNav() {
   if (loading) {
     return (
       <div className="flex gap-4 overflow-x-auto scrollbar-hide py-4 px-2">
-    {[...Array(5)].map((_, i) => (
-      <CategoryCardSkeleton key={i} />
-    ))}
-  </div>
+        {[...Array(5)].map((_, i) => (
+          <CategoryCardSkeleton key={i} />
+        ))}
+      </div>
     );
   }
 
@@ -39,15 +40,15 @@ export default function CategoryNav() {
         {/* Categories */}
         <div className="w-full overflow-x-auto scrollbar-hide">
           <div
-            className="flex gap-4 py-4 md:px-6 "
+            className="flex gap-4 py-4 md:px-6 overflow-x-auto scrollbar-hide"
           >
             {categories.map((cat) => (
-              <button
+              <Link
                 key={cat.id}
-                onClick={() => (window.location.href = `/category/${cat.slug}`)}
+                href={`/category/${cat.slug}`}
                 onMouseEnter={() => setHoveredId(cat.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className="group relative flex-shrink-0 w-30 md:w-50 bg-primary rounded-2xl p-5 shadow-lg hover:shadow-2xl transform cursor-pointer transition-all duration-300"
+                className="group relative flex-shrink-0 w-40 md:w-52 bg-primary rounded-2xl p-5 shadow-lg hover:shadow-2xl transform cursor-pointer transition-all duration-300"
               >
                 {/* Icon */}
                 <div className="mb-3 flex justify-center">
@@ -73,13 +74,13 @@ export default function CategoryNav() {
                 <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                   <ChevronRight className="w-5 h-5 text-white" />
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
 
 
-        
+
       </div>
     </div>
   );

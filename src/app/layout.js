@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import Providers from "@/components/Providers"; // client wrapper
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,13 +23,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header/>
-        {children}
-        <Toaster /> 
-        <Footer/>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Providers>
+          <Header />
+          {children}
+          <Toaster />
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

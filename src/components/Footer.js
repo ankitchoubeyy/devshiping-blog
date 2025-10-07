@@ -3,7 +3,7 @@
 import axios from "axios";
 import { Mail, Heart, Code, BookOpen, Users } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { toast } from "sonner";
@@ -12,6 +12,23 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [postCount, setPostCount] = useState(0);
+
+  // Fetch total post count from WordPress REST API
+  useEffect(() => {
+    async function fetchPostCount() {
+      try {
+        const response = await fetch("https://whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/posts?per_page=1");
+
+        const total = response.headers.get("X-WP-Total");
+        if (total) setPostCount(Number(total));
+      } catch (error) {
+        console.error("Error fetching post count:", error);
+      }
+    }
+
+    fetchPostCount();
+  }, []);
 
   // Function to handle newsletter form submission
   const handleSubmit = async (e) => {
@@ -220,12 +237,14 @@ const Footer = () => {
 
           <div className="flex items-center gap-6 text-sm">
             <div className="text-center">
-              <div className="text-2xl font-bold text-white">500+</div>
+              <div className="text-2xl font-bold text-white">
+                {postCount > 0 ? `${postCount}+` : "—"}
+              </div>
               <div className="text-gray-500">Articles</div>
             </div>
             <div className="w-px h-10 bg-secondary"></div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-white">50K+</div>
+              <div className="text-2xl font-bold text-white">1K+</div>
               <div className="text-gray-500">Readers</div>
             </div>
           </div>
