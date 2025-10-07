@@ -12,10 +12,10 @@ export default function AboutPage() {
       <section className="max-w-4xl mx-auto px-6 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-            About <span className="text-secondary">DevShiping</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6 text-foreground">
+            About <span className="text-secondary">Us</span>
           </h1>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed text-justify">
             DevShiping is a modern tech media platform dedicated to helping
             developers, engineers, and tech enthusiasts stay informed about
             the ever-evolving world of technology, software, and AI.
@@ -25,7 +25,7 @@ export default function AboutPage() {
         {/* Mission & Coverage Section */}
         <section className="grid md:grid-cols-2 gap-12 items-start mb-20">
           {/* Left Side - Image */}
-          <div className="relative w-full h-80 md:h-96 rounded-3xl overflow-hidden shadow-lg">
+          <div className="relative w-full h-70 sm:h-80 md:h-96 rounded-3xl  overflow-hidden shadow-lg">
             <Image
               src="https://whitesmoke-wildcat-383702.hostingersite.com/wp-content/uploads/2025/10/about-us-page-scaled.jpg"
               alt="Collaborative team of developers innovating in a modern tech environment"
@@ -38,10 +38,10 @@ export default function AboutPage() {
           {/* Right Side - Text */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-semibold mb-4 text-foreground">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-foreground">
                 Our Mission
               </h2>
-              <p className="text-gray-700 leading-relaxed text-lg">
+              <p className="text-gray-700 leading-relaxed text-lg text-justify">
                 Our goal is to simplify how developers and tech enthusiasts consume
                 the latest trends and updates in the tech world. From AI and
                 programming frameworks to new tools and software releases — we
@@ -50,7 +50,7 @@ export default function AboutPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl font-semibold mb-4 text-foreground">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-foreground">
                 What We Cover
               </h2>
               <ul className="space-y-3 text-gray-700">
@@ -76,11 +76,11 @@ export default function AboutPage() {
         </section>
 
         {/* Vision Section */}
-        <section className="text-center mb-20">
-          <h2 className="text-3xl font-semibold mb-6 text-foreground">
+        <section className="md:text-center mb-20">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-foreground">
             Built for Tech Lovers
           </h2>
-          <p className="text-gray-700 max-w-3xl mx-auto text-lg leading-relaxed text-center">
+          <p className="text-gray-700 max-w-3xl mx-auto text-lg leading-relaxed md:text-center text-justify">
             DevShiping was created with one vision — to empower developers by
             sharing reliable knowledge, deep insights, and the latest updates
             that truly matter. We believe in community-driven growth and in
@@ -89,13 +89,13 @@ export default function AboutPage() {
         </section>
 
         {/* Contact CTA */}
-        <section className="text-center">
-          <h3 className="text-2xl font-semibold mb-4 text-foreground">
-            Let’s Connect
+        <section className="md:text-center">
+          <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
+            Let&apos;s Connect
           </h3>
           <p className="text-gray-600 mb-8 text-lg max-w-2xl mx-auto">
             Have a story idea, partnership proposal, or feedback?  
-            Reach out — we’d love to hear from you.
+            Reach out — we&apos;d love to hear from you.
           </p>
           <a
             href="/contact"

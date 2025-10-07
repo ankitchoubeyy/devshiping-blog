@@ -6,8 +6,17 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 
 const Footer = () => {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const currentYear = new Date().getFullYear();
+  cont [email, setEmail] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Handle form submission
+    
+    // Reset form fields
+    setEmail("");
+  };
 
   // Footer Sections
   const sections = [
@@ -100,7 +109,10 @@ const Footer = () => {
                   type="email"
                   placeholder="Your email"
                   autoComplete="off"
+                  name="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-4 py-2 bg-primary border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
                 />
                 <button className="px-4 py-2 bg-secondary text-white rounded-lg flex items-center justify-center">
@@ -166,8 +178,9 @@ const Footer = () => {
         <div className="border-t border-secondary/60 pt-6 text-center">
           <p className="text-gray-500 text-sm">
             © {currentYear} <span className="text-gray-400 font-medium">Devshiping.com</span>. 
-            All rights reserved. Made with <Heart className="w-4 h-4 inline text-red-500 fill-current" /> by developers, for developers.
+            All rights reserved.
           </p>
+          <p className="text-gray-500 text-sm mt-2">Made in 🇮🇳</p>
         </div>
       </div>
     </footer>

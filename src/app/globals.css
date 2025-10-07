@@ -134,4 +134,13 @@ body {
 
 .post-content div figure {
   @apply my-2;
-}         
+}  
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

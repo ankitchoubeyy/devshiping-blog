@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import PostSkeleton from "@/components/PostSkeleton";
 import { FaArrowRight } from "react-icons/fa";
 import CategoryNav from "@/components/CategoryNav";
+import { ChevronRight } from "lucide-react";
 
 export default function Page() {
   const [posts, setPosts] = useState([]);
@@ -165,6 +166,16 @@ export default function Page() {
             Discover articles, tutorials, and resources organized by topic
           </p>
       <CategoryNav />
+      {/* View All Link */}
+        <div className="text-center">
+          <button
+            onClick={() => window.location.href = '/categories'}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-secondary cursor-pointer text-white font-semibold rounded-xl hover:bg-secondary/90 transition-all shadow-lg hover:shadow-xl"
+          >
+            View All Categories
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
     </div>
   );
 }
