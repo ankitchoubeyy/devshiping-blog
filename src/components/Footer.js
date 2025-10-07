@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { Mail, Heart, Code, BookOpen, Users } from "lucide-react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -7,12 +8,23 @@ import { FaX } from "react-icons/fa6";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  cont [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    const apiEndpoint = 'https://silver-gerbil-607908.hostingersite.com/api/newsletter.php';
     // Handle form submission
+    const response = axios.post(apiEndpoint, {
+      email,
+    });
+
+    if (response.status === 200) {
+      // Form submission successful
+      console.log("Form submitted successfully", response.data);
+    } else {
+      // Form submission failed
+      console.log("Form submission failed");
+    }
     
     // Reset form fields
     setEmail("");
