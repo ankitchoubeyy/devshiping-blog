@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devshiping.com/sitemap.xml

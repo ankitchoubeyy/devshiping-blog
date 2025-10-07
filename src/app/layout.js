@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import Providers from "@/components/Providers"; // client wrapper
 import Script from "next/script";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
           }
         </Script>
         <Providers>
+          <AnalyticsTracker />
           <Header />
           {children}
           <Toaster />
