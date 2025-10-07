@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Providers from "@/components/Providers"; // client wrapper
 import Script from "next/script";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,8 +39,12 @@ export default function RootLayout({ children }) {
           gtag('config', 'G-L7Q7EMK00H');`
           }
         </Script>
+
+        
         <Providers>
-          <AnalyticsTracker />
+          <Suspense fallback={null}>
+            <AnalyticsTracker />
+          </Suspense>
           <Header />
           {children}
           <Toaster />
