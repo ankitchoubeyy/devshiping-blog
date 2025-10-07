@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react";
 import { Mail, MessageSquare, Send, CheckCircle, MapPin, Clock, Phone } from "lucide-react";
+import { toast } from "sonner";
+import axios from "axios";
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
@@ -18,14 +20,33 @@ export default function ContactPage() {
         e.preventDefault();
         setStatus("loading");
 
-        // Simulate API call
-        setTimeout(() => {
-            setStatus("success");
-            setTimeout(() => {
-                setFormData({ name: "", email: "", message: "" });
-                setStatus("");
-            }, 3000);
-        }, 1500);
+        // API endpoint
+        const apiEndpoint = "https://silver-gerbil-607908.hostingersite.com/api/contact.php";
+
+        axios
+            .post(apiEndpoint, formData)
+            .then((response) => {
+                if (response.data.success) {
+                    setStatus("success");
+
+                    // Adding toast notification
+                    toast.success(response.data.message);
+
+                    // Reset form
+                    setFormData({
+                        name: "",
+                        email: "",
+                        message: "",
+                    })
+                } else {
+                    setStatus("error");
+                }
+            })
+            .catch((error) => {
+                console.error("Error submitting form:", error);
+                setStatus("error");
+                toast.error("Something went wrong, please try again later.");
+            });
     };
 
     return (
@@ -98,7 +119,7 @@ export default function ContactPage() {
                             </div>
                         </div>
 
-                        
+
 
                     </div>
                     {/* Contact Form - Takes 2 columns */}

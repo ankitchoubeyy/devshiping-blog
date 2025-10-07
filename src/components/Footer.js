@@ -3,31 +3,47 @@
 import axios from "axios";
 import { Mail, Heart, Code, BookOpen, Users } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
+import { toast } from "sonner";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Function to handle newsletter form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const apiEndpoint = 'https://silver-gerbil-607908.hostingersite.com/api/newsletter.php';
-    // Handle form submission
-    const response = axios.post(apiEndpoint, {
-      email,
-    });
+    setLoading(true);
 
-    if (response.status === 200) {
-      // Form submission successful
-      console.log("Form submitted successfully", response.data);
-    } else {
-      // Form submission failed
-      console.log("Form submission failed");
+    const apiEndpoint = "https://silver-gerbil-607908.hostingersite.com/api/newsletter.php";
+
+    try {
+      const response = await axios.post(apiEndpoint, { email });
+
+      if (response.data.success) {
+        toast.success(`${response.data.message}`);
+      } else {
+        toast.error("Something went wrong, please try again later.");
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 409) {
+          toast.error(`${error.response.data.message}`);
+        } else if (error.response.status === 400) {
+          toast.error("Invalid email address!");
+        } else {
+          toast.error("Server error, please try again later.");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+    } finally {
+      setLoading(false);
+      setEmail("");
     }
-    
-    // Reset form fields
-    setEmail("");
   };
 
   // Footer Sections
@@ -116,7 +132,7 @@ const Footer = () => {
             {/* Newsletter */}
             <div className="mt-6">
               <p className="text-sm text-gray-400 mb-3 font-medium">Subscribe to our newsletter</p>
-              <div className="flex gap-2">
+              <form onSubmit={handleSubmit} className="flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
@@ -127,10 +143,39 @@ const Footer = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-4 py-2 bg-primary border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
                 />
-                <button className="px-4 py-2 bg-secondary text-white rounded-lg flex items-center justify-center">
-                  <Mail className="w-4 h-4" />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`px-4 py-2 bg-secondary text-white rounded-lg flex items-center justify-center transition-all duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-secondary/90"
+                    }`}
+                >
+                  {loading ? (
+                    <svg
+                      className="w-4 h-4 animate-spin text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
+                  ) : (
+                    <Mail className="w-4 h-4" />
+                  )}
                 </button>
-              </div>
+
+              </form>
             </div>
           </div>
 
@@ -189,7 +234,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-secondary/60 pt-6 text-center">
           <p className="text-gray-500 text-sm">
-            © {currentYear} <span className="text-gray-400 font-medium">Devshiping.com</span>. 
+            © {currentYear} <span className="text-gray-400 font-medium">Devshiping.com</span>.
             All rights reserved.
           </p>
           <p className="text-gray-500 text-sm mt-2">Made in 🇮🇳</p>
