@@ -132,9 +132,17 @@ body {
   @apply text-xl sm:text-2xl font-bold my-4 sm:my-5;
 }
 
+.post-content h3 {
+  @apply text-lg sm:text-xl font-bold my-4 sm:my-5;
+}
+
+.post-content p {
+  @apply text-justify my-1;
+}
+
 .post-content div figure {
   @apply my-2;
-}  
+} 
 
 
 .scrollbar-hide::-webkit-scrollbar {
