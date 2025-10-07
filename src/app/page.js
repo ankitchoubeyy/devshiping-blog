@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,32 +12,22 @@ import PostSkeleton from "@/components/PostSkeleton";
 import { FaArrowRight } from "react-icons/fa";
 import CategoryNav from "@/components/CategoryNav";
 import { ChevronRight } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../../redux/slice/postsSlice.js";
 
 export default function Page() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { items: posts, status } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const res = await fetch("https://whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/posts?_embed");
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
+    if (status === "idle") {
+      dispatch(fetchPosts());
     }
+  }, [dispatch, status]);
 
-    fetchPosts();
-  }, []);
-
-  if (loading) {
+  if (status === "loading") {
     return (
       <div className="max-w-5xl mx-auto px-4 py-8">
-
-
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[...Array(6)].map((_, i) => (
             <PostSkeleton key={i} />
@@ -49,7 +39,6 @@ export default function Page() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-
       {/* Hero Slider */}
       <div className="mb-12">
         <Swiper
@@ -85,7 +74,7 @@ export default function Page() {
                       href={`/posts/${post.slug}`}
                       className="bg-secondary flex w-fit gap-3 items-center text-white py-2 px-4 rounded  hover:text-white hover:bg-secondary/80 font-medium"
                     >
-                      Read More <FaArrowRight/>
+                      Read More <FaArrowRight />
                     </Link>
                   </CardContent>
                 </Card>
@@ -95,7 +84,10 @@ export default function Page() {
         </Swiper>
       </div>
 
-      <h2 className="text-2xl sm:text-3xl font-bold mb-8 border-l-4 border-secondary pl-2">Latest Posts</h2>
+      {/* Latest Posts */}
+      <h2 className="text-2xl sm:text-3xl font-bold mb-8 border-l-4 border-secondary pl-2">
+        Latest Posts
+      </h2>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post) => {
@@ -159,21 +151,25 @@ export default function Page() {
         })}
       </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold mt-8 border-l-4 border-secondary pl-2">Browse by Category</h2>
-        <p className="text-slate-600 text-lg max-w-2xl pl-3 mt-2 mb-3">
-            Discover articles, tutorials, and resources organized by topic
-          </p>
+      {/* Categories */}
+      <h2 className="text-2xl sm:text-3xl font-bold mt-8 border-l-4 border-secondary pl-2">
+        Browse by Category
+      </h2>
+      <p className="text-slate-600 text-lg max-w-2xl pl-3 mt-2 mb-3">
+        Discover articles, tutorials, and resources organized by topic
+      </p>
       <CategoryNav />
+
       {/* View All Link */}
-        <div className="text-center">
-          <Link
-            href = '/categories'
-            className="inline-flex items-center gap-2 px-6 py-3 bg-secondary cursor-pointer text-white font-semibold rounded-xl hover:bg-secondary/90 transition-all shadow-lg hover:shadow-xl"
-          >
-            View All Categories
-            <ChevronRight className="w-5 h-5" />
-          </Link>
-        </div>
+      <div className="text-center mt-6">
+        <Link
+          href="/categories"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-secondary cursor-pointer text-white font-semibold rounded-xl hover:bg-secondary/90 transition-all shadow-lg hover:shadow-xl"
+        >
+          View All Categories
+          <ChevronRight className="w-5 h-5" />
+        </Link>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Async thunk to fetch posts
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const res = await axios.get("https://silver-gerbil-607908.hostingersite.com/wp-json/wp/v2/posts");
+  const res = await axios.get("https://whitesmoke-wildcat-383702.hostingersite.com/wp-json/wp/v2/posts?_embed");
   return res.data;
 });
 
