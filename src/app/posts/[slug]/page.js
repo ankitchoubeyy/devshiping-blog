@@ -1,5 +1,7 @@
 import PostContent from "@/components/PostContent";
+import SocialShare from "@/components/SocialShare";
 import Image from "next/image";
+
 
 async function getPost(slug) {
   const res = await fetch(
@@ -9,6 +11,8 @@ async function getPost(slug) {
   const posts = await res.json();
   return posts.length > 0 ? posts[0] : null;
 }
+
+
 
 export default async function SinglePostPage({ params }) {
   const { slug } = params;
@@ -33,7 +37,9 @@ export default async function SinglePostPage({ params }) {
     year: "numeric",
   });
 
-  
+  // Construct the full URL for sharing
+  const postUrl = `https://yourdomain.com/posts/${slug}`;
+  const postTitle = post.title.rendered.replace(/<[^>]*>/g, ""); // Strip HTML tags
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-12 overflow-x-hidden">
@@ -74,11 +80,20 @@ export default async function SinglePostPage({ params }) {
         )}
       </div>
 
+      {/* Social Share */}
+      <div className="mb-8 pb-8 border-b border-gray-200">
+        <SocialShare url={postUrl} title={postTitle} />
+      </div>
+
       {/* Post Content */}
       <div>
         <PostContent content={post.content.rendered} />
       </div>
-      
+
+      {/* Bottom Social Share */}
+      <div className="mt-12 pt-8 border-t border-gray-200">
+        <SocialShare url={postUrl} title={postTitle} />
+      </div>
     </article>
   );
 }
