@@ -86,10 +86,10 @@ export default function ContactPage() {
                                     <div>
                                         <p className="text-slate-300 text-sm mb-1">Email</p>
                                         <a
-                                            href="mailto:contact@devshiping.com"
+                                            href="mailto:devshiping@gmail.com"
                                             className="font-semibold hover:text-blue-300 transition-colors"
                                         >
-                                            contact@devshiping.com
+                                            devshiping@gmail.com
                                         </a>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@ export default function ContactPage() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         autoComplete="off"
-                                        placeholder="John Doe"
+                                        placeholder="Ankit Choubey"
                                         className="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-blue-100 transition-all"
                                     />
                                 </div>
@@ -169,7 +169,7 @@ export default function ContactPage() {
                                         required
                                         value={formData.email}
                                         onChange={handleChange}
-                                        placeholder="john@example.com"
+                                        placeholder="ankit@example.com"
                                         autoComplete="off"
                                         className="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-blue-100 transition-all"
                                     />

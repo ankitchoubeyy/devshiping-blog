@@ -60,17 +60,17 @@ const Footer = () => {
       icon: <BookOpen className="w-5 h-5 text-secondary" />,
       links: [
         { name: "Home", href: "/" },
-        { name: "About Us", href: "/about" },
-        { name: "Blog", href: "/blog" },
+        { name: "About", href: "/about" },
         { name: "Tutorials", href: "/tutorials" },
+        { name: "Guides", href: "/guides" },
       ],
     },
     {
       title: "Categories",
       icon: <Code className="w-5 h-5 text-secondary" />,
       links: [
-        { name: "Tech News", href: "/category/tech-news" },
-        { name: "AI Updates", href: "/category/ai-updates" },
+        { name: "AI", href: "/category/ai" },
+        { name: "JavaScript", href: "/category/javascript" },
         { name: "Internet", href: "/category/internet" },
         { name: "React.js", href: "/category/react" },
       ],
@@ -157,7 +157,7 @@ const Footer = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`px-4 py-2 bg-secondary text-white rounded-lg flex items-center justify-center transition-all duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-secondary/90"
+                  className={`px-4 py-2 cursor-pointer bg-secondary text-white rounded-lg flex items-center justify-center transition-all duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-secondary/90"
                     }`}
                 >
                   {loading ? (

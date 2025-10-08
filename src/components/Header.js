@@ -16,10 +16,10 @@ export default function Header() {
 
     const navLinks = [
         { href: "/", label: "Home" },
-        { href: "/news", label: "Tech News" },
-        { href: "/ai", label: "AI Updates" },
-        { href: "/tools", label: "Dev Tools" },
-        { href: "/trends", label: "Programming Trends" },
+        { href: "/tutorials", label: "Tutorials" },
+        { href: "/guides", label: "Guides" },
+        { href: "/about", label: "About" },
+        { href: "/contact", label: "Contact Us" },
     ];
 
     const dispatch = useDispatch();
