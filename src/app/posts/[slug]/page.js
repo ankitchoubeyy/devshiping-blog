@@ -1,3 +1,5 @@
+
+
 import PostContent from "@/components/PostContent";
 import SocialShare from "@/components/SocialShare";
 import Image from "next/image";
@@ -15,7 +17,7 @@ async function getPost(slug) {
 
 
 export default async function SinglePostPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   const post = await getPost(slug);
 
   if (!post) {
@@ -38,22 +40,21 @@ export default async function SinglePostPage({ params }) {
   });
 
   // Construct the full URL for sharing
-  const postUrl = `https://yourdomain.com/posts/${slug}`;
+
   const postTitle = post.title.rendered.replace(/<[^>]*>/g, ""); // Strip HTML tags
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-12 overflow-x-hidden">
       {/* Featured Image */}
       {image && (
-        <div className="relative w-full h-80 mb-8">
-          <Image
-            src={image}
-            alt={post.title.rendered}
-            fill
-            className="object-cover rounded-2xl"
-            sizes="100vw"
-          />
-        </div>
+        <Image
+          src={image}
+          alt={post.title.rendered}
+          width={768}  // matches container max-width
+          height={320} // adjust height to match your design
+          className="object-cover rounded-2xl mb-8"
+          priority
+        />
       )}
 
       {/* Title */}
@@ -82,7 +83,7 @@ export default async function SinglePostPage({ params }) {
 
       {/* Social Share */}
       <div className="mb-8 pb-8 border-b border-gray-200">
-        <SocialShare url={postUrl} title={postTitle} />
+        <SocialShare />
       </div>
 
       {/* Post Content */}
@@ -92,7 +93,7 @@ export default async function SinglePostPage({ params }) {
 
       {/* Bottom Social Share */}
       <div className="mt-12 pt-8 border-t border-gray-200">
-        <SocialShare url={postUrl} title={postTitle} />
+        <SocialShare />
       </div>
     </article>
   );
